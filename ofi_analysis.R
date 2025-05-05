@@ -6,7 +6,7 @@ library(stats)
 library(pracma)    # for normalization
 library(ggplot2)
 
-# Read your dataset (adjust path as needed)
+# Read  dataset
 df <- fread("first_25000_rows.csv")
 
 # Ensure it is sorted by timestamp
@@ -47,11 +47,9 @@ df$ofi_integrated[valid_rows] <- ofi_integrated
 
 ### 4. OPTIONAL: CROSS-ASSET OFI FORMAT -------------------------------
 
-# If your dataset has multiple symbols, pivot for cross-impact estimation
 if (length(unique(df$symbol)) > 1) {
   ofi_cross <- df[, .(ts_event, symbol, ofi_integrated)]
   wide_ofi <- pivot_wider(ofi_cross, names_from = symbol, values_from = ofi_integrated)
-  # Save or use this wide format for LASSO modeling
 }
 
 ### Export result
